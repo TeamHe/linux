@@ -1280,9 +1280,6 @@ ATTRIBUTE_GROUPS(coresight_source);
 
 static struct device_type coresight_dev_type[] = {
 	{
-		.name = "none",
-	},
-	{
 		.name = "sink",
 		.groups = coresight_sink_groups,
 	},
