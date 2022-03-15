@@ -1550,6 +1550,17 @@ static inline struct devlink *netdev_to_devlink(struct net_device *dev)
 	return NULL;
 }
 
+/* Devlink instance explicit locking */
+void devl_lock(struct devlink *devlink);
+void devl_unlock(struct devlink *devlink);
+void devl_assert_locked(struct devlink *devlink);
+bool devl_lock_is_held(struct devlink *devlink);
+
+int devl_port_register(struct devlink *devlink,
+		       struct devlink_port *devlink_port,
+		       unsigned int port_index);
+void devl_port_unregister(struct devlink_port *devlink_port);
+
 struct ib_device;
 
 struct net *devlink_net(const struct devlink *devlink);
