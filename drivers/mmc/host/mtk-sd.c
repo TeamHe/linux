@@ -2395,7 +2395,7 @@ static const struct mmc_host_ops mt_msdc_ops = {
 	.card_busy = msdc_card_busy,
 	.execute_tuning = msdc_execute_tuning,
 	.prepare_hs400_tuning = msdc_prepare_hs400_tuning,
-	.hw_reset = msdc_hw_reset,
+	.card_hw_reset = msdc_hw_reset,
 };
 
 static const struct cqhci_host_ops msdc_cmdq_ops = {
