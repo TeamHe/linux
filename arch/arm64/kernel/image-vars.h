@@ -83,10 +83,6 @@ KVM_NVHE_ALIAS(__hyp_stub_vectors);
 /* Kernel symbol used by icache_is_vpipt(). */
 KVM_NVHE_ALIAS(__icache_flags);
 
-/* Kernel symbols needed for cpus_have_final/const_caps checks. */
-KVM_NVHE_ALIAS(arm64_const_caps_ready);
-KVM_NVHE_ALIAS(cpu_hwcap_keys);
-
 /* Static keys which are set if a vGIC trap should be handled in hyp. */
 KVM_NVHE_ALIAS(vgic_v2_cpuif_trap);
 KVM_NVHE_ALIAS(vgic_v3_cpuif_trap);
