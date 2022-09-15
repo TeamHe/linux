@@ -260,12 +260,12 @@ static struct kpp_alg dh = {
 	},
 };
 
-static int dh_init(void)
+static int __init dh_init(void)
 {
 	return crypto_register_kpp(&dh);
 }
 
-static void dh_exit(void)
+static void __exit dh_exit(void)
 {
 	crypto_unregister_kpp(&dh);
 }
