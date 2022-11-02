@@ -58,6 +58,7 @@ struct devlink {
 	   reload_enabled:1;
 	refcount_t refcount;
 	struct completion comp;
+	struct notifier_block netdevice_nb;
 	char priv[0] __aligned(NETDEV_ALIGN);
 };
 
