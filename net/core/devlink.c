@@ -9121,9 +9121,12 @@ static void devlink_port_type_warn_cancel(struct devlink_port *devlink_port)
 	cancel_delayed_work_sync(&devlink_port->type_warn_dw);
 }
 
-int devl_port_register(struct devlink *devlink,
-		       struct devlink_port *devlink_port,
-		       unsigned int port_index)
+static const struct devlink_port_ops devlink_port_dummy_ops = {};
+
+int devl_port_register_with_ops(struct devlink *devlink,
+				struct devlink_port *devlink_port,
+				unsigned int port_index,
+				const struct devlink_port_ops *ops)
 {
 	lockdep_assert_held(&devlink->lock);
 
@@ -9133,6 +9136,7 @@ int devl_port_register(struct devlink *devlink,
 	WARN_ON(devlink_port->devlink);
 	devlink_port->devlink = devlink;
 	devlink_port->index = port_index;
+	devlink_port->ops = ops ? ops : &devlink_port_dummy_ops;
 	spin_lock_init(&devlink_port->type_lock);
 	INIT_LIST_HEAD(&devlink_port->reporter_list);
 	mutex_init(&devlink_port->reporters_lock);
@@ -9145,7 +9149,7 @@ int devl_port_register(struct devlink *devlink,
 	devlink_port_notify(devlink_port, DEVLINK_CMD_PORT_NEW);
 	return 0;
 }
-EXPORT_SYMBOL_GPL(devl_port_register);
+EXPORT_SYMBOL_GPL(devl_port_register_with_ops);
 
 /**
  *	devlink_port_register - Register devlink port
@@ -9153,6 +9157,7 @@ EXPORT_SYMBOL_GPL(devl_port_register);
  *	@devlink: devlink
  *	@devlink_port: devlink port
  *	@port_index: driver-specific numerical identifier of the port
+ *	@ops: port ops
  *
  *	Register devlink port with provided port index. User can use
  *	any indexing, even hw-related one. devlink_port structure
@@ -9160,18 +9165,20 @@ EXPORT_SYMBOL_GPL(devl_port_register);
  *	Note that the caller should take care of zeroing the devlink_port
  *	structure.
  */
-int devlink_port_register(struct devlink *devlink,
-			  struct devlink_port *devlink_port,
-			  unsigned int port_index)
+int devlink_port_register_with_ops(struct devlink *devlink,
+				   struct devlink_port *devlink_port,
+				   unsigned int port_index,
+				   const struct devlink_port_ops *ops)
 {
 	int err;
 
 	mutex_lock(&devlink->lock);
-	err = devl_port_register(devlink, devlink_port, port_index);
+	err = devl_port_register_with_ops(devlink, devlink_port,
+					  port_index, ops);
 	mutex_unlock(&devlink->lock);
 	return err;
 }
-EXPORT_SYMBOL_GPL(devlink_port_register);
+EXPORT_SYMBOL_GPL(devlink_port_register_with_ops);
 
 void devl_port_unregister(struct devlink_port *devlink_port)
 {
