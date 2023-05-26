@@ -1601,8 +1601,6 @@ static const struct devlink_ops mlxsw_devlink_ops = {
 				  BIT(DEVLINK_RELOAD_ACTION_FW_ACTIVATE),
 	.reload_down		= mlxsw_devlink_core_bus_device_reload_down,
 	.reload_up		= mlxsw_devlink_core_bus_device_reload_up,
-	.port_split			= mlxsw_devlink_port_split,
-	.port_unsplit			= mlxsw_devlink_port_unsplit,
 	.sb_pool_get			= mlxsw_devlink_sb_pool_get,
 	.sb_pool_set			= mlxsw_devlink_sb_pool_set,
 	.sb_port_pool_get		= mlxsw_devlink_sb_port_pool_get,
@@ -2745,6 +2743,8 @@ u64 mlxsw_core_res_get(struct mlxsw_core *mlxsw_core,
 EXPORT_SYMBOL(mlxsw_core_res_get);
 
 static const struct devlink_port_ops mlxsw_devlink_port_ops = {
+	.port_split			= mlxsw_devlink_port_split,
+	.port_unsplit			= mlxsw_devlink_port_unsplit,
 };
 
 static int __mlxsw_core_port_init(struct mlxsw_core *mlxsw_core, u8 local_port,

@@ -320,8 +320,6 @@ nfp_devlink_flash_update(struct devlink *devlink,
 }
 
 const struct devlink_ops nfp_devlink_ops = {
-	.port_split		= nfp_devlink_port_split,
-	.port_unsplit		= nfp_devlink_port_unsplit,
 	.sb_pool_get		= nfp_devlink_sb_pool_get,
 	.sb_pool_set		= nfp_devlink_sb_pool_set,
 	.eswitch_mode_get	= nfp_devlink_eswitch_mode_get,
@@ -331,6 +329,8 @@ const struct devlink_ops nfp_devlink_ops = {
 };
 
 static const struct devlink_port_ops nfp_devlink_port_ops = {
+	.port_split		= nfp_devlink_port_split,
+	.port_unsplit		= nfp_devlink_port_unsplit,
 };
 
 int nfp_devlink_port_register(struct nfp_app *app, struct nfp_port *port)
