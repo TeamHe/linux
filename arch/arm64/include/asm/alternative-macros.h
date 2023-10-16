@@ -220,8 +220,8 @@ alternative_endif
 static __always_inline bool
 alternative_has_feature_likely(unsigned long feature)
 {
-	compiletime_assert(feature < ARM64_NCAPS,
-			   "feature must be < ARM64_NCAPS");
+	if (!cpucap_is_possible(feature))
+		return false;
 
 	asm_volatile_goto(
 	ALTERNATIVE_CB("b	%l[l_no]", %[feature], alt_cb_patch_nops)
@@ -238,8 +238,8 @@ l_no:
 static __always_inline bool
 alternative_has_feature_unlikely(unsigned long feature)
 {
-	compiletime_assert(feature < ARM64_NCAPS,
-			   "feature must be < ARM64_NCAPS");
+	if (!cpucap_is_possible(feature))
+		return false;
 
 	asm_volatile_goto(
 	ALTERNATIVE("nop", "b	%l[l_yes]", %[feature])
