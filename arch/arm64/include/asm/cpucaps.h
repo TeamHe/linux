@@ -42,6 +42,8 @@ cpucap_is_possible(const unsigned int cap)
 		return IS_ENABLED(CONFIG_UNMAP_KERNEL_AT_EL0);
 	case ARM64_WORKAROUND_843419:
 		return IS_ENABLED(CONFIG_ARM64_ERRATUM_843419);
+	case ARM64_WORKAROUND_1742098:
+		return IS_ENABLED(CONFIG_ARM64_ERRATUM_1742098);
 	}
 
 	return true;
