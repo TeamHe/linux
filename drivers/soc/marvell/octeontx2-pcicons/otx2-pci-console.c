@@ -230,7 +230,6 @@ exit:
 
 static int pci_console_nexus_de_init_resources(struct platform_device *pdev)
 {
-	struct device *dev = &pdev->dev;
 	struct pci_console_nexus *pci_cons_nexus = platform_get_drvdata(pdev);
 
 	if (pci_cons_nexus && pci_cons_nexus->desc) {
@@ -394,7 +393,6 @@ exit:
 
 static void pci_console_nexus_shutdown(struct platform_device *pdev)
 {
-	struct device *dev = &pdev->dev;
 }
 
 /*
@@ -1164,8 +1162,6 @@ exit:
 
 static void pci_console_shutdown(struct platform_device *pdev)
 {
-	struct device *dev = &pdev->dev;
-
 	pci_console_de_init(pdev);
 }
 
